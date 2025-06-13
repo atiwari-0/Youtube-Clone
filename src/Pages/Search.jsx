@@ -16,7 +16,7 @@ const Search = () => {
         return (
           <div
             key={video.videoId || index}
-            className="flex flex-col sm:flex-row gap-4 border-b pb-4 dark:border-gray-700"
+            className="flex flex-col sm:flex-row gap-4"
           >
             {/* Thumbnail */}
             <Link
@@ -34,11 +34,11 @@ const Search = () => {
             <div className="flex flex-col justify-start text-yt-text-primary dark:text-yt-text-inverted">
               <Link
                 to={`/watch/${video.videoId}`}
-                className="text-lg font-semibold hover:text-yt-red transition-colors"
+                className="text-lg font-semibold text-[var(--color-primary)] hover:text-yt-red transition-colors"
               >
                 {video.title}
               </Link>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
+              <p className="text-sm text-[var(--color-secondary)] mt-1 line-clamp-2">
                 {video.descriptionSnippet || 'No description'}
               </p>
               <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">

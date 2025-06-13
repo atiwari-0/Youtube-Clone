@@ -1,8 +1,24 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useLocation, NavLink } from 'react-router';
 
 const Aside = ({ expanded, height }) => {
     const location = useLocation();
+    const [darkMode, setDarkMode] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('darkMode') === 'true';
+        }
+        return false;
+    });
+
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('darkMode', 'false');
+        }
+    }, [darkMode]);
 
     const mainLinks = useMemo(() => [
         { icon: 'fa-house', text: 'Home', path: '/' },
@@ -11,76 +27,79 @@ const Aside = ({ expanded, height }) => {
         { icon: 'fa-gamepad', text: 'Gaming', path: '/gaming' },
     ], []);
 
-    const subscriptions = useMemo(() => [
-        { icon: 'fa-circle-user', text: 'Channel 1', color: 'text-red-500' },
-        { icon: 'fa-circle-user', text: 'Channel 2', color: 'text-blue-500' },
-        { icon: 'fa-circle-user', text: 'Channel 3', color: 'text-green-500' },
-    ], []);
-
-    // Base classes for consistent styling
     const linkBaseClasses = 'flex items-center rounded-lg transition-colors duration-200';
-    const activeLinkClasses = 'font-medium bg-yt-light-200 dark:bg-yt-dark-700';
-    const inactiveLinkClasses = 'hover:bg-yt-light-100 dark:hover:bg-yt-dark-800';
+    const activeLinkClasses = 'font-medium bg-[var(--color-tertiary)] dark:bg-[var(--color-dark-tertiary)]';
+    const inactiveLinkClasses = 'hover:bg-[var(--color-tertiary)] dark:hover:bg-[var(--color-dark-tertiary)]';
 
     return (
-        <aside
-            className={`fixed  bg-white dark:bg-dark-900 h-full transition-all duration-300 ease-in-out ${expanded ? 'w-40' : 'w-24'
+        <>
+            {/* Desktop Sidebar (on mobile) */}
+            <aside
+                className={`hidden md:block fixed bg-[var(--color-bg-root)] dark:bg-[var(--color-dark-bg-root)] h-full transition-all duration-300 ease-in-out ${
+                    expanded ? 'w-40' : 'w-24'
                 }`}
-            aria-label="Sidebar navigation"
-        >
-            <div className="h-full overflow-y-auto pb-6 hide-scrollbar">
-                {/* Main Links */}
-                <nav aria-label="Main navigation">
-                    <div className={`${expanded ? 'border-b flex juatify-center flex-col' : 'flex flex-col justify-center'} pt-2 pb-4`}>
-                        {mainLinks.map((link, index) => (
-                            <NavLink
-                                key={index}
-                                to={link.path}
-                                className={({ isActive }) =>
-                                    `${linkBaseClasses} ${isActive ? activeLinkClasses : inactiveLinkClasses} ${expanded ? 'flex-row px-6 py-3 mx-1' : 'flex-col py-3 -translate-x-2'
-                                    } ${location.pathname === link.path ? 'bg-secondary text-white' : 'text-primary'}`
-                                }
-                                aria-current={location.pathname === link.path ? 'page' : undefined}
-                            >
-                                <i
-                                    className={`fa-solid ${link.icon} text-xl `}
-                                    aria-hidden="true"
-                                />
-                                <span className={`${expanded ? 'ml-6' : 'text-xs mt-1'}`}>
-                                    {link.text}
-                                </span>
-                            </NavLink>
-                        ))}
-                    </div>
-                </nav>
-
-                {/* Subscriptions */}
-                {expanded && (
-                    <nav aria-label="Subscriptions">
-                        <div className="pt-2">
-                            <h2 className="px-4 py-2 text-sm font-medium text-yt-text-secondary dark:text-yt-text-inverted">
-                                SUBSCRIPTIONS
-                            </h2>
-                            {subscriptions.map((channel, index) => (
-                                <a
+                aria-label="Sidebar navigation"
+                style={{ top: height }}
+            >
+                <div className="h-full overflow-y-auto pb-6 hide-scrollbar">
+                    {/* Main Links */}
+                    <nav aria-label="Main navigation">
+                        <div className={`${expanded ? 'border-b border-[var(--color-secondary)] dark:border-[var(--color-dark-secondary)] flex justify-center flex-col' : 'flex flex-col justify-center'} pt-2 pb-4`}>
+                            {mainLinks.map((link, index) => (
+                                <NavLink
                                     key={index}
-                                    href="#"
-                                    className={`${linkBaseClasses} ${inactiveLinkClasses} px-4 py-2 mx-1`}
+                                    to={link.path}
+                                    className={({ isActive }) =>
+                                        `${linkBaseClasses} ${
+                                            isActive ? activeLinkClasses : inactiveLinkClasses
+                                        } ${
+                                            expanded
+                                                ? 'flex-row px-6 py-3 mx-1'
+                                                : 'flex-col py-3 -translate-x-2'
+                                        }`
+                                    }
+                                    aria-current={location.pathname === link.path ? 'page' : undefined}
                                 >
                                     <i
-                                        className={`fa-solid ${channel.icon} text-xl ${channel.color}`}
+                                        className={`fa-solid ${link.icon} text-xl text-[var(--color-secondary)] dark:text-[var(--color-dark-secondary)]`}
                                         aria-hidden="true"
                                     />
-                                    <span className="ml-6 text-yt-text-primary dark:text-yt-text-inverted">
-                                        {channel.text}
+                                    <span className={`${expanded ? 'ml-6' : 'text-xs mt-1'} text-[var(--color-text-primary)] dark:text-[var(--color-dark-text-primary)]`}>
+                                        {link.text}
                                     </span>
-                                </a>
+                                </NavLink>
                             ))}
                         </div>
                     </nav>
-                )}
+                </div>
+            </aside>
+
+            {/* Mobile Bottom Navigation (only on mobile) */}
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--color-bg-root)] dark:bg-[var(--color-dark-bg-root)] border-t border-[var(--color-secondary)] dark:border-[var(--color-dark-secondary)] z-50">
+                <nav className="flex justify-around items-center py-2">
+                    {mainLinks.map((link, index) => (
+                        <NavLink
+                            key={index}
+                            to={link.path}
+                            className={({ isActive }) =>
+                                `${linkBaseClasses} ${
+                                    isActive ? activeLinkClasses : inactiveLinkClasses
+                                } flex-col items-center p-2`
+                            }
+                            aria-current={location.pathname === link.path ? 'page' : undefined}
+                        >
+                            <i
+                                className={`fa-solid ${link.icon} text-lg text-[var(--color-secondary)] dark:text-[var(--color-dark-secondary)]`}
+                                aria-hidden="true"
+                            />
+                            <span className="text-xs mt-1 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text-primary)]">
+                                {link.text}
+                            </span>
+                        </NavLink>
+                    ))}
+                </nav>
             </div>
-        </aside>
+        </>
     );
 };
 

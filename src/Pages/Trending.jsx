@@ -27,7 +27,7 @@ const Trending = () => {
         <Link
           key={video.videoId || index}
           to={`/watch/${video.videoId}`}
-          className="block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+          className="block  bg-[var(--color-tertiary)] text-[var(--color-primary)] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
         >
           {/* Thumbnail */}
           <div className="relative">
@@ -54,8 +54,8 @@ const Trending = () => {
               />
               {/* Title and Meta */}
               <div>
-                <h3 className="font-semibold text-gray-900 line-clamp-2">{video.title}</h3>
-                <div className="text-sm text-gray-700 flex items-center gap-1">
+                <h3 className="font-semibold text-[var(--color-primary)] line-clamp-2">{video.title}</h3>
+                <div className="text-sm text-[var(--color-secondary)] flex items-center gap-1">
                   {video.author}
                   {video.authorVerified && (
                     <svg

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Changed from react-router to react-router-dom
+import { Link } from 'react-router';
 import { fetchData } from '../utils';
 import Loader from '../Components/Loader';
 const Home = () => {
@@ -46,7 +46,7 @@ const Home = () => {
         <Link
           to={`/watch/${video.videoId}`}
           key={video.videoId || index}
-          className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+          className="bg-[var(--color-tertiary)] text-[var(--color-primary)] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
         >
           {/* Thumbnail */}
           <div className="relative">
@@ -65,10 +65,10 @@ const Home = () => {
           {/* Info */}
           <div className="p-4">
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0"> {/* Added container for the avatar */}
+              <div className="flex-shrink-0">  
                 <Link 
                   to={`/channel/${video.authorId || video.channelId}`}
-                  onClick={(e) => e.stopPropagation()} // Prevent triggering the video link
+                  onClick={(e) => e.stopPropagation()}  
                 >
                   <img
                     src={video.authorThumbnails?.[0]?.url || 'https://via.placeholder.com/40'}
@@ -77,9 +77,9 @@ const Home = () => {
                   />
                 </Link>
               </div>
-              <div className="min-w-0"> {/* Added min-w-0 to prevent text overflow */}
-                <h3 className="font-semibold text-gray-900 line-clamp-2">{video.title}</h3>
-                <div className="text-sm text-gray-700 flex items-center gap-1">
+              <div className="min-w-0"> 
+                <h3 className="font-semibold text-[var(--color-primary)] line-clamp-2">{video.title}</h3>
+                <div className="text-sm text-[var(--color-secondary)] flex items-center gap-1">
                   <Link 
                     to={`/channel/${video.authorId || video.channelId}`}
                     className="hover:text-gray-900 hover:underline"

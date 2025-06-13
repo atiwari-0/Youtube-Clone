@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import wwebanner from '../assets/banner.jpg';
 import wwelogo from '../assets/wwe.jpg';
 
 const ChannelPage = () => {
+    const [activeTab, setActiveTab] = useState('home');
+    
     const channel = {
         title: "WWE",
         avatar: [
@@ -11,7 +13,7 @@ const ChannelPage = () => {
         ],
         banner: {
             desktop: [
-                { url: {wwebanner} }
+                { url: wwebanner }
             ]
         },
         badges: [{ type: "VERIFIED_CHANNEL" }],
@@ -36,6 +38,7 @@ const ChannelPage = () => {
             }
         ]
     };
+
     const {
         title = 'Channel',
         avatar = [],
@@ -48,13 +51,95 @@ const ChannelPage = () => {
     } = channel;
 
     const avatarUrl = avatar[0]?.url || wwelogo;
+    const bannerUrl = banner.desktop[0]?.url || wwebanner;
+
+    const renderHomeContent = () => (
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+                <div key={item} className="bg-[var(--color-text-tertiary)] text-[var(--color-text-primary)] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div className="relative pt-[56.25%] bg-[var(--color-text-secondary)]">
+                        {/* Thumbnail placeholder */}
+                    </div>
+                    <div className="p-3">
+                        <h3 className="font-medium line-clamp-2">Video Title {item}</h3>
+                        <p className="text-sm text-gray-600 mt-1">Channel Name</p>
+                        <p className="text-xs text-gray-500 mt-1">1M views • 1 day ago</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+
+    const renderVideosContent = () => (
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                <div key={item} className="bg-[var(--color-text-tertiary)] text-[var(--color-text-primary)] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div className="relative pt-[56.25%] bg-[var(--color-text-secondary)]">
+                        {/* Thumbnail placeholder */}
+                    </div>
+                    <div className="p-3">
+                        <h3 className="font-medium line-clamp-2">Video {item}</h3>
+                        <p className="text-sm text-gray-600 mt-1">100K views</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+
+    const renderPlaylistsContent = () => (
+        <div className="mt-6">
+            <div className="space-y-4">
+                {[1, 2, 3].map((item) => (
+                    <div key={item} className="flex items-center gap-4 p-3 bg-[var(--color-text-tertiary)] rounded-lg">
+                        <div className="relative w-1/3 pt-[25%] bg-[var(--color-text-secondary)]">
+                            {/* Playlist thumbnail placeholder */}
+                        </div>
+                        <div>
+                            <h3 className="font-medium">Playlist {item}</h3>
+                            <p className="text-sm text-gray-600 mt-1">10 videos</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderCommunityContent = () => (
+        <div className="mt-6 space-y-4">
+            {[1, 2, 3].map((item) => (
+                <div key={item} className="p-4 bg-[var(--color-text-tertiary)] rounded-lg">
+                    <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 rounded-full bg-[var(--color-text-secondary)]"></div>
+                        <div>
+                            <h3 className="font-medium">Community Post {item}</h3>
+                            <p className="text-xs text-gray-500">2 days ago</p>
+                        </div>
+                    </div>
+                    <p className="mt-2">This is a sample community post content...</p>
+                </div>
+            ))}
+        </div>
+    );
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case 'videos':
+                return renderVideosContent();
+            case 'playlists':
+                return renderPlaylistsContent();
+            case 'community':
+                return renderCommunityContent();
+            default:
+                return renderHomeContent();
+        }
+    };
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-[var(--color-tertiary)] text-[var(--color-primary)] min-h-screen">
             {/* Channel Banner */}
             <div className="relative">
                 <img 
-                    src={wwebanner} 
+                    src={bannerUrl} 
                     alt={`${title} channel banner`}
                     className="w-full h-48 md:h-56 lg:h-64 object-cover"
                 />
@@ -69,20 +154,20 @@ const ChannelPage = () => {
                         <img
                             src={avatarUrl}
                             alt={`${title} channel avatar`}
-                            className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+                            className="w-32 h-32 rounded-full shadow-lg"
                         />
                     </div>
 
                     {/* Channel Metadata */}
                     <div className="flex-1 text-center md:text-left">
                         <div className="flex items-center justify-center md:justify-start gap-2">
-                            <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+                            <h1 className="text-2xl font-bold">{title}</h1>
                             {badges.some(b => b.type === "VERIFIED_CHANNEL") && (
                                 <FaCheckCircle className="text-blue-500" title="Verified" />
                             )}
                         </div>
                         
-                        <div className="mt-2 text-gray-600">
+                        <div className="mt-2 text-[var(--color-secondary)]">
                             <span className="font-medium">{subscribersText}</span>
                             {joinedDateText && (
                                 <>
@@ -106,15 +191,15 @@ const ChannelPage = () => {
 
                 {/* Description */}
                 {description && (
-                    <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                    <div className="mt-6 p-4 rounded-lg shadow-sm">
                         <h2 className="text-lg font-semibold mb-2">About</h2>
-                        <p className="text-gray-700 whitespace-pre-line">{description}</p>
+                        <p className="text-[var(--color-primary)] whitespace-pre-line">{description}</p>
                     </div>
                 )}
 
                 {/* Links */}
                 {links.length > 0 && (
-                    <div className="mt-6 bg-white p-4 rounded-lg shadow-sm">
+                    <div className="mt-6 p-4 rounded-lg shadow-sm">
                         <h2 className="text-lg font-semibold mb-3">Links</h2>
                         <div className="flex flex-wrap gap-4">
                             {links.map((link, index) => (
@@ -139,39 +224,38 @@ const ChannelPage = () => {
                     </div>
                 )}
 
-                {/* Tabs (Placeholder) */}
+                {/* Tabs */}
                 <div className="mt-6 border-b border-gray-200">
                     <nav className="flex space-x-8">
-                        <button className="px-1 py-3 border-b-2 border-red-600 font-medium text-red-600">
+                        <button 
+                            onClick={() => setActiveTab('home')}
+                            className={`px-1 py-3 font-medium ${activeTab === 'home' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
                             Home
                         </button>
-                        <button className="px-1 py-3 font-medium text-gray-500 hover:text-gray-700">
+                        <button 
+                            onClick={() => setActiveTab('videos')}
+                            className={`px-1 py-3 font-medium ${activeTab === 'videos' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
                             Videos
                         </button>
-                        <button className="px-1 py-3 font-medium text-gray-500 hover:text-gray-700">
+                        <button 
+                            onClick={() => setActiveTab('playlists')}
+                            className={`px-1 py-3 font-medium ${activeTab === 'playlists' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
                             Playlists
                         </button>
-                        <button className="px-1 py-3 font-medium text-gray-500 hover:text-gray-700">
+                        <button 
+                            onClick={() => setActiveTab('community')}
+                            className={`px-1 py-3 font-medium ${activeTab === 'community' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
                             Community
                         </button>
                     </nav>
                 </div>
 
-                {/* Content Placeholder */}
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map((item) => (
-                        <div key={item} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-                            <div className="relative pt-[56.25%] bg-gray-200">
-                                {/* Thumbnail placeholder */}
-                            </div>
-                            <div className="p-3">
-                                <h3 className="font-medium line-clamp-2">Video Title {item}</h3>
-                                <p className="text-sm text-gray-600 mt-1">Channel Name</p>
-                                <p className="text-xs text-gray-500 mt-1">1M views • 1 day ago</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                {/* Render content based on active tab */}
+                {renderContent()}
             </div>
         </div>
     );

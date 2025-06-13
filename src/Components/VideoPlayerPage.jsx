@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { fetchData } from '../utils';
 import Loader from './Loader';
-
+import favicon from '../assets/favicon.png'
 const formatRelativeDate = (dateStr) => {
   const now = new Date();
   const past = new Date(dateStr);
@@ -84,7 +84,7 @@ const VideoPlayerPage = () => {
     <div className="container mx-auto px-4 py-6 flex flex-col lg:flex-row">
       {/* Left Section */}
       <div className="w-full lg:w-2/3 lg:pr-6">
-        <div className="relative pt-[56.25%] bg-black rounded-xl overflow-hidden">
+        <div className="relative pt-[56.25%] bg-[var(--color-tertiary)] rounded-xl overflow-hidden">
           <iframe
             className="absolute top-0 left-0 w-full h-full"
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
@@ -97,7 +97,7 @@ const VideoPlayerPage = () => {
 
         <div className="mt-4">
           <h1 className="text-xl font-bold">{title}</h1>
-          <div className="flex justify-between text-sm text-gray-600 mt-2">
+          <div className="flex justify-between text-sm text-[var(--color-secondary)]mt-2">
             <span>{formatViews(stats?.views)}</span>
             <span>{formatRelativeDate(publishedDate)}</span>
           </div>
@@ -106,7 +106,7 @@ const VideoPlayerPage = () => {
             <div className="flex items-center gap-3">
               <Link to={`/channel/${author?.channelId}`}>
   <img
-    src={author?.avatar?.[0]?.url}
+    src={favicon}
     alt={author?.title}
     className="w-10 h-10 rounded-full"
   />
@@ -130,7 +130,7 @@ const VideoPlayerPage = () => {
             </button>
           </div>
 
-          <div className="mt-4 p-4 bg-gray-100 rounded-lg whitespace-pre-line text-sm">
+          <div className="mt-4 p-4 bg-[var(--color-tertiary)] rounded-lg whitespace-pre-line text-sm">
             {description}
           </div>
 
@@ -150,9 +150,9 @@ const VideoPlayerPage = () => {
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-2">Comments</h3>
             {mockComments.map((c, i) => (
-              <div key={i} className="mb-4 p-3 bg-white shadow rounded">
+              <div key={i} className="mb-4 p-3 bg-[var(--color-tertiary)] shadow rounded">
                 <p className="font-medium">{c.user}</p>
-                <p className="text-sm text-gray-700">{c.comment}</p>
+                <p className="text-sm text-[var(--color-secondary)]">{c.comment}</p>
                 <p className="text-xs text-gray-400">{c.time}</p>
               </div>
             ))}
@@ -168,7 +168,7 @@ const VideoPlayerPage = () => {
             <Link
               key={i}
               to={`/watch/${video.videoId}`}
-              className="flex hover:bg-gray-100 p-2 rounded-lg transition"
+              className="flex hover:bg-[var(--color-tertiary)] p-2 rounded-lg transition"
             >
               <div className="relative w-40 flex-shrink-0">
                 <img

@@ -49,7 +49,7 @@ const Gaming = () => {
             <Link
               key={video.videoId || index}
               to={`/watch/${video.videoId}`}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300"
+              className="bg-[var(--color-tertiary)] text-[var(--color-primary)] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300"
             >
               {/* Thumbnail */}
               <div className="relative">
@@ -74,8 +74,8 @@ const Gaming = () => {
                     className="w-10 h-10 rounded-full"
                   />
                   <div>
-                    <h3 className="font-semibold text-gray-900 line-clamp-2">{video.title}</h3>
-                    <div className="text-sm text-gray-700 flex items-center gap-1">
+                    <h3 className="font-semibold text-[var(--color-primary)] line-clamp-2">{video.title}</h3>
+                    <div className="text-sm text-[var(--color-secondary)] flex items-center gap-1">
                       {video.author?.title}
                       {video.author?.badges?.includes('VERIFIED_CHANNEL') && (
                         <svg className="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
