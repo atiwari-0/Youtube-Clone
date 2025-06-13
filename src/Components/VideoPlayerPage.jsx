@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { fetchData } from '../utils';
+import Loader from './Loader';
 
 const formatRelativeDate = (dateStr) => {
   const now = new Date();
@@ -73,7 +74,7 @@ const VideoPlayerPage = () => {
 
   const toggleSubscribe = () => setIsSubscribed(prev => !prev);
 
-  if (loading) return <div className="p-4">Loading video...</div>;
+  if (loading) return <Loader/>;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
   if (!videoData) return <div className="p-4">No video data found.</div>;
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { fetchData } from '../utils';
+import Loader from '../Components/Loader';
 
 const Shopping = () => {
   const [shopdata, setshopData] = useState(null);
@@ -28,7 +29,7 @@ const Shopping = () => {
     }
   }, []);
 
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (loading) return <Loader/>;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   const formatDuration = (seconds) => {

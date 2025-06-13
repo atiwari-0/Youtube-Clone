@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Changed from react-router to react-router-dom
 import { fetchData } from '../utils';
-
+import Loader from '../Components/Loader';
 const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const Home = () => {
       .join(':');
   };
 
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (loading) return <Loader/>;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (

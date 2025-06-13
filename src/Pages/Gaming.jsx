@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../utils';
 import { Link } from 'react-router';
-
+import Loader from '../Components/Loader'
 const Gaming = () => {
   const [gameData, setGameData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ const Gaming = () => {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
   };
 
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (loading) return <Loader/>;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
