@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@theme {
+  --color-bg-root: #ffffff;
+  --text-default-color: #0F0F0F;
+  --color-yt-red: #FF0000;
+  --color-primary: #0F0F0F;
+  --color-secondary: #606060;
+  --color-dark-bg: #0F0F0F;
+  --color-dark-text: #FFFFFF;
+
+  --font-family-sans: "Roboto", sans-serif;
+  
+  --spacing-header: 4rem;
+}
+
+:root {
+  background-color: var(--color-bg-root);
+  color: var(--text-default-color);
+  font-family: var(--font-family-sans);
+}
+
+.dark {
+  --color-bg-root: var(--color-dark-bg);
+  --text-default-color: var(--color-dark-text);
+}
+
+/* @layer components {
+  .yt-btn {
+    @apply px-4 py-2 rounded-sm font-medium transition-colors;
+  }
+  
+  .yt-btn-primary {
+    @apply yt-btn bg-[var(--color-red)] text-white hover:bg-red-700;
+  }
+  
+  .yt-video-card {
+    @apply rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02];
+  }
+} */
+
+/* Custom Utilities */
+@layer utilities {
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+  
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+}
+@media(max-width:640px){
+  aside{
+    display: none;
+  }
+}
